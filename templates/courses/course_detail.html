@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.title }} - Learning Platform{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>{{ course.title }}</h1>
+    <p><strong>Instructor:</strong> {{ course.instructor.username }}</p>
+    <p><strong>Category:</strong> {{ course.category }}</p>
+    <p><strong>Price:</strong> ${{ course.price }}</p>
+    <hr style="margin: 20px 0;">
+    <h3>Course Description</h3>
+    <p>{{ course.description }}</p>
+
+    {% if user.is_authenticated %}
+        {% if is_enrolled or user == course.instructor %}
+            <br>
+            <h3 style="color:#2ecc71;">You have access to this course!</h3>
+            <h4>Course Lessons:</h4>
+            <ul>
+                {% for lesson in lessons %}
+                <li>
+                    <a href="{% url 'lesson_detail' course.id lesson.id %}">{{ lesson.title }}</a>
+                </li>
+                {% empty %}
+                <p>No lessons uploaded yet.</p>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% if not user.is_instructor %}
+                <form action="{% url 'enroll_course' course.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success" style="background-color: #2ecc71; font-weight: bold; margin-top:20px;">Enroll Now for ${{ course.price }}</button>
+                </form>
+            {% else %}
+                <p style="color:red; margin-top:20px;">Instructor accounts cannot enroll in courses!</p>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <p style="margin-top: 20px;">Please <a href="{% url 'login' %}">login</a> to enroll in this course.</p>
+    {% endif %}
+</div>
+{% endblock %}

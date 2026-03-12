@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Instructor Dashboard{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>Instructor Dashboard</h1>
+    <a href="{% url 'create_course' %}" class="btn" style="background-color: #2ecc71;">+ Create New Course</a>
+</div>
+
+<div style="margin-top: 20px;">
+    <h2>Your Courses</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+        {% for course in courses %}
+        <div class="card">
+            <h3>{{ course.title }}</h3>
+            <p><strong>Students Enrolled:</strong> {{ course.enrollments.count }}</p>
+            <p><strong>Total Lessons:</strong> {{ course.lessons.count }}</p>
+            <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+                <a href="{% url 'course_detail' course.id %}" class="btn" style="background-color:#95a5a6;">View</a>
+                <a href="{% url 'upload_lesson' course.id %}" class="btn" style="background-color:#f1c40f; color:#333;">Add Lesson</a>
+                <a href="{% url 'edit_course' course.id %}" class="btn">Edit</a>
+                <a href="{% url 'delete_course' course.id %}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>You haven't created any courses yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

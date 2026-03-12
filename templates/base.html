@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Learning Platform{% endblock %}</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f7f9fc; }
+        header { background-color: #2c3e50; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        nav { display: flex; gap: 15px; }
+        a { color: #3498db; text-decoration: none; }
+        header a { color: white; font-weight: bold; }
+        .container { padding: 20px; max-width: 1200px; margin: auto; }
+        .btn { padding: 8px 16px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; }
+        .btn:hover { background-color: #2980b9; }
+        .btn-danger { background-color: #e74c3c; }
+        .card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h2><a href="{% url 'course_list' %}" style="text-decoration: none;">Learning Platform</a></h2>
+    </div>
+    <nav>
+        <a href="{% url 'course_list' %}">All Courses</a>
+        {% if user.is_authenticated %}
+            {% if user.is_instructor %}
+                <a href="{% url 'instructor_dashboard' %}">Dashboard</a>
+            {% endif %}
+            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" style="background:none;border:none;color:white;cursor:pointer;font-weight:bold;font-size:16px;">Logout</button>
+            </form>
+            <span>Welcome, {{ user.username }}!</span>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+    </nav>
+</header>
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Courses - Learning Platform{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>Available Courses</h1>
+    <form method="get" style="display: flex; gap: 10px;">
+        <input type="text" name="q" placeholder="Search courses..." style="padding: 8px;">
+        <button type="submit" class="btn">Search</button>
+    </form>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+    {% for course in courses %}
+    <div class="card">
+        <h3>{{ course.title }}</h3>
+        <p><strong>Category:</strong> {{ course.category }}</p>
+        <p><strong>Instructor:</strong> {{ course.instructor.username }}</p>
+        <p><strong>Price:</strong> ${{ course.price }}</p>
+        <p>{{ course.description|truncatewords:20 }}</p>
+        <a href="{% url 'course_detail' course.id %}" class="btn">View Details</a>
+    </div>
+    {% empty %}
+    <p>No courses found.</p>
+    {% endfor %}
+</div>
+{% endblock %}
