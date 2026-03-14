@@ -18,11 +18,11 @@ def populate():
     instructor = User.objects.create_user(username='instructor1', password='password123', email='instructor@test.com', is_instructor=True, is_student=False)
     student1 = User.objects.create_user(username='student1', password='password123', email='student1@test.com', is_student=True)
     
-    # Path to generated artifact images
-    # We will use the absolute paths returned by the generate_image tool
-    dev_img_path = r'C:\Users\manji\.gemini\antigravity\brain\6988d8c7-2ba8-4a8e-9bb6-da0d6e811973\mock_course_dev_1773324820284.png'
-    design_img_path = r'C:\Users\manji\.gemini\antigravity\brain\6988d8c7-2ba8-4a8e-9bb6-da0d6e811973\mock_course_design_1773324839460.png'
-    bus_img_path = r'C:\Users\manji\.gemini\antigravity\brain\6988d8c7-2ba8-4a8e-9bb6-da0d6e811973\mock_course_business_1773324862892.png'
+    from django.conf import settings
+    base_dir = settings.BASE_DIR
+    dev_img_path = os.path.join(base_dir, 'static', 'images', 'mock', 'mock_course_dev_1773324820284.png')
+    design_img_path = os.path.join(base_dir, 'static', 'images', 'mock', 'mock_course_design_1773324839460.png')
+    bus_img_path = os.path.join(base_dir, 'static', 'images', 'mock', 'mock_course_business_1773324862892.png')
     
     print("Creating courses...")
     
