@@ -7,6 +7,7 @@ class Course(models.Model):
     instructor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='courses')
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     category = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='course_images/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

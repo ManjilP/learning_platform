@@ -5,6 +5,10 @@ from .models import Course, Lesson, Enrollment
 def is_instructor(user):
     return user.is_authenticated and user.is_instructor
 
+def home(request):
+    featured_courses = Course.objects.all()[:3]
+    return render(request, 'courses/home.html', {'featured_courses': featured_courses, 'is_home': True})
+
 def course_list(request):
     courses = Course.objects.all()
     query = request.GET.get('q')

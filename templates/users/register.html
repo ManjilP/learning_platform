@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %}Register - Learning Platform{% endblock %}
+{% block title %}Register - Nexus Learn{% endblock %}
 
 {% block content %}
-<div class="card" style="max-width: 400px; margin: 40px auto;">
-    <h2>Register</h2>
+<div class="card" style="max-width: 450px; margin: 80px auto; padding: 40px;">
+    <h2 style="font-size: 2rem; background: linear-gradient(to right, #60a5fa, #c084fc); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align:center; margin-bottom: 30px;">Create Account</h2>
     <form method="post">
         {% csrf_token %}
-        <div style="display: flex; flex-direction: column; gap: 15px;">
+        <div style="display: flex; flex-direction: column;">
             {{ form.as_p }}
-            <button type="submit" class="btn">Register</button>
+            <button type="submit" class="btn" style="width: 100%; margin-top:20px;">Register &rarr;</button>
         </div>
     </form>
-    <p style="margin-top: 20px;">Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+    <div style="text-align:center; margin-top: 30px; font-size:0.95rem; color:var(--text-muted);">
+        Already have access? <a href="{% url 'login' %}" style="color:#60a5fa; font-weight:600;">Sign in to portal.</a>
+    </div>
 </div>
 {% endblock %}
